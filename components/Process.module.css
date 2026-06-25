@@ -1,0 +1,177 @@
+.process {
+  background: linear-gradient(180deg, #020817 0%, #0a1628 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.bgLines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 60px,
+    rgba(255,255,255,0.015) 60px,
+    rgba(255,255,255,0.015) 61px
+  );
+  mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black, transparent);
+}
+
+.header {
+  text-align: center;
+  max-width: 660px;
+  margin: 0 auto 72px;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.headerVisible { opacity: 1; transform: translateY(0); }
+
+/* Steps Grid */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 72px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.stepsVisible { opacity: 1; }
+
+.stepCard {
+  position: relative;
+  padding: 28px 24px 32px;
+  background: rgba(255,255,255,0.025);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  cursor: default;
+  animation: stepReveal 0.6s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation-play-state: paused;
+  transition: border-color 0.3s, background 0.3s, transform 0.3s;
+  overflow: hidden;
+}
+
+.stepsVisible .stepCard { animation-play-state: running; }
+
+@keyframes stepReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stepCard:hover {
+  background: rgba(255,255,255,0.04);
+  transform: translateY(-4px);
+}
+
+.stepActive {
+  border-color: rgba(201, 168, 76, 0.3) !important;
+  background: rgba(201, 168, 76, 0.04) !important;
+}
+
+.activeBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c9a84c, transparent);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+
+.stepActive .activeBorder { transform: scaleX(1); }
+.stepCard:hover .activeBorder { transform: scaleX(1); }
+
+.stepNumber {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: rgba(201, 168, 76, 0.6);
+  margin-bottom: 12px;
+}
+
+.stepIcon {
+  font-size: 2rem;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.stepTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f0f4ff;
+  margin-bottom: 10px;
+}
+
+.stepDesc {
+  font-size: 0.86rem;
+  color: rgba(192, 204, 216, 0.72);
+  line-height: 1.7;
+}
+
+/* Connector */
+.connector {
+  display: none;
+}
+
+/* CTA Card */
+.processCta {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.7s 0.3s;
+}
+
+.ctaVisible { opacity: 1; transform: translateY(0); }
+
+.ctaCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 56px;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.08) 0%, rgba(201, 168, 76, 0.04) 100%);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaCard::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -10%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ctaContent { flex: 1; }
+
+.ctaTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #f0f4ff;
+  margin-bottom: 8px;
+}
+
+.ctaText {
+  font-size: 0.96rem;
+  color: rgba(192, 204, 216, 0.75);
+}
+
+@media (max-width: 900px) {
+  .stepsGrid { grid-template-columns: repeat(2, 1fr); }
+  .ctaCard { flex-direction: column; text-align: center; padding: 36px 24px; }
+}
+
+@media (max-width: 600px) {
+  .stepsGrid { grid-template-columns: 1fr; }
+}

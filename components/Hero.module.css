@@ -3,7 +3,10 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background: linear-gradient(135deg, var(--navy-950) 0%, var(--navy-900) 40%, var(--navy-800) 70%, var(--navy-950) 100%);
+  background:
+    linear-gradient(125deg, rgba(255, 255, 255, 0.94) 0%, rgba(248, 250, 252, 0.98) 42%, rgba(240, 249, 255, 0.9) 100%),
+    radial-gradient(circle at 12% 18%, rgba(201, 168, 76, 0.14), transparent 34%),
+    radial-gradient(circle at 88% 22%, rgba(45, 139, 165, 0.1), transparent 32%);
   overflow: hidden;
   padding-top: 80px;
 }
@@ -25,9 +28,9 @@
 
 .blob {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.12;
+  border-radius: 999px;
+  filter: blur(70px);
+  opacity: 0.08;
   animation: blobFloat 8s ease-in-out infinite;
 }
 
@@ -43,7 +46,7 @@
 .blob2 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, var(--navy-700) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(45, 139, 165, 0.22) 0%, transparent 70%);
   bottom: -100px;
   right: 10%;
   animation-delay: -3s;
@@ -84,6 +87,7 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  position: relative;
 }
 
 /* Animations */
@@ -105,15 +109,22 @@
   line-height: 1.05;
   color: var(--white);
   margin-bottom: 24px;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 .gradText {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, #b08d32 100%);
+  background: linear-gradient(110deg, var(--gold) 0%, var(--gold-light) 42%, #2d8ba5 58%, #b08d32 100%);
+  background-size: 220% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   display: block;
+  animation: textShine 5s ease-in-out infinite;
+}
+
+@keyframes textShine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 }
 
 .sub {
@@ -140,6 +151,9 @@
 
 .badge {
   font-family: 'Space Grotesk', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -148,6 +162,13 @@
   border: 1px solid var(--glass-border-gold);
   padding: 5px 12px;
   border-radius: 100px;
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.badge:hover {
+  background: rgba(255, 255, 255, 0.86);
+  border-color: rgba(45, 139, 165, 0.28);
+  transform: translateY(-2px);
 }
 
 /* Image Wrap */
@@ -180,16 +201,35 @@
   width: 100%;
   max-width: 560px;
   aspect-ratio: 1 / 0.87;
-  background: var(--glass-white);
-  border: 1px solid var(--glass-border);
-  border-radius: 32px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.76)),
+    linear-gradient(135deg, rgba(201, 168, 76, 0.14), rgba(45, 139, 165, 0.12));
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   backdrop-filter: blur(10px);
-  box-shadow: var(--shadow-deep);
+  box-shadow: var(--shadow-deep), 0 18px 50px rgba(45, 139, 165, 0.08);
   position: relative;
+}
+
+.imageBg::before {
+  content: '';
+  position: absolute;
+  inset: -35% auto -35% -45%;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+  transform: rotate(18deg);
+  animation: frameShine 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes frameShine {
+  0%, 35% { left: -55%; opacity: 0; }
+  48% { opacity: 1; }
+  68%, 100% { left: 112%; opacity: 0; }
 }
 
 .productImg {
@@ -201,7 +241,7 @@
 }
 
 .imageBg:hover .productImg {
-  transform: scale(1.04);
+  transform: scale(1.045) translateY(-4px);
 }
 
 /* Corner accents */
@@ -235,7 +275,7 @@
   gap: 10px;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid var(--glass-border-gold);
-  border-radius: 14px;
+  border-radius: 8px;
   padding: 12px 16px;
   backdrop-filter: blur(20px);
   box-shadow: var(--shadow-card);
@@ -243,6 +283,12 @@
   animation-delay: var(--delay, 0s);
   white-space: nowrap;
   z-index: 2;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.floatCard:hover {
+  border-color: rgba(45, 139, 165, 0.3);
+  box-shadow: var(--shadow-card), 0 10px 28px rgba(45, 139, 165, 0.1);
 }
 
 @keyframes floatAnim {
@@ -251,7 +297,8 @@
 }
 
 .floatIcon {
-  font-size: 1.3rem;
+  color: #2d8ba5;
+  display: inline-flex;
   flex-shrink: 0;
 }
 
@@ -264,7 +311,7 @@
 
 .floatLabel {
   font-size: 0.7rem;
-  color: var(--white-dim);
+  color: var(--silver-light);
   font-weight: 400;
 }
 
@@ -308,15 +355,90 @@
 }
 
 @media (max-width: 900px) {
+  .hero {
+    min-height: auto;
+    align-items: flex-start;
+    padding-top: 96px;
+  }
+
   .inner {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 34px;
     text-align: center;
+    min-height: auto;
+    padding-top: 18px;
+    padding-bottom: 70px;
   }
-  .imageWrap { order: -1; }
+
+  .content { order: 1; }
+
+  .imageWrap {
+    order: 2;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    transform: none !important;
+  }
+
   .sub { margin: 0 auto 32px; }
   .actions { justify-content: center; }
   .badges { justify-content: center; }
-  .floatCard { display: none; }
+
+  .imageBg {
+    grid-column: 1 / -1;
+    max-width: 520px;
+    margin: 0 auto;
+    border-radius: 22px;
+  }
+
+  .floatCard {
+    position: static;
+    justify-content: center;
+    white-space: normal;
+    min-height: 70px;
+    padding: 10px 8px;
+    animation: mobileCardIn 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+    animation-delay: calc(0.75s + var(--delay, 0s));
+  }
+
+  .floatLabel {
+    line-height: 1.2;
+  }
+
   .gradText { display: inline; }
+
+  .scrollIndicator { display: none; }
+}
+
+@keyframes mobileCardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 560px) {
+  .headline {
+    font-size: clamp(2.45rem, 12vw, 3.7rem);
+    line-height: 1.08;
+    margin-bottom: 18px;
+  }
+
+  .sub {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .actions {
+    gap: 10px;
+  }
+
+  .imageWrap {
+    grid-template-columns: 1fr;
+  }
+
+  .floatCard {
+    max-width: 320px;
+    width: 100%;
+    margin: 0 auto;
+  }
 }

@@ -1,12 +1,13 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { Award, ShieldCheck, Sparkles, Star, Wrench } from 'lucide-react';
 import styles from './Hero.module.css';
 
 const floatingCards = [
-  { icon: '🏆', value: '500+', label: 'Projects Delivered', delay: 0 },
-  { icon: '⭐', value: '4.9/5', label: 'Client Rating', delay: 0.2 },
-  { icon: '🔧', value: '15yr', label: 'Industry Expertise', delay: 0.4 },
+  { icon: Award, value: '500+', label: 'Projects Delivered', delay: 0 },
+  { icon: Star, value: '4.9/5', label: 'Client Rating', delay: 0.2 },
+  { icon: Wrench, value: '15yr', label: 'Industry Expertise', delay: 0.4 },
 ];
 
 const trustBadges = ['ISO 9001:2015', 'HACCP Certified', 'FDA Approved', '24/7 Support'];
@@ -16,13 +17,12 @@ export default function Hero() {
   const heroRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
-  // Particle canvas
   useEffect(() => {
     const canvas = particleRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let animId;
-    let particles = [];
+    const particles = [];
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -31,7 +31,6 @@ export default function Hero() {
     resize();
     window.addEventListener('resize', resize);
 
-    // Create particles
     for (let i = 0; i < 80; i++) {
       particles.push({
         x: Math.random() * canvas.width,
@@ -47,7 +46,6 @@ export default function Hero() {
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw connections
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
@@ -64,13 +62,12 @@ export default function Hero() {
         }
       }
 
-      // Draw particles
       particles.forEach((p) => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
         ctx.fillStyle = p.gold
           ? `rgba(201, 168, 76, ${p.opacity})`
-          : `rgba(192, 204, 216, ${p.opacity * 0.6})`;
+          : `rgba(39, 125, 161, ${p.opacity * 0.45})`;
         ctx.fill();
 
         p.x += p.vx;
@@ -89,7 +86,6 @@ export default function Hero() {
     };
   }, []);
 
-  // Parallax mouse effect
   useEffect(() => {
     const handleMouse = (e) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -102,22 +98,23 @@ export default function Hero() {
 
   return (
     <section className={styles.hero} ref={heroRef} id="hero">
-      {/* Particle background */}
       <canvas ref={particleRef} className={styles.particles} />
 
-      {/* Background gradient blobs */}
-      <div className={styles.blobWrap} style={{
-        transform: `translate(${mousePos.x * -20}px, ${mousePos.y * -10}px)`
-      }}>
+      <div
+        className={styles.blobWrap}
+        style={{
+          transform: `translate(${mousePos.x * -20}px, ${mousePos.y * -10}px)`,
+        }}
+      >
         <div className={`${styles.blob} ${styles.blob1}`} />
         <div className={`${styles.blob} ${styles.blob2}`} />
         <div className={`${styles.blob} ${styles.blob3}`} />
       </div>
 
       <div className={`${styles.inner} container`}>
-        {/* Left Content */}
         <div className={styles.content}>
           <div className={`tag-label ${styles.fadeIn}`} style={{ animationDelay: '0.1s' }}>
+            <Sparkles size={14} strokeWidth={2} aria-hidden="true" />
             India's Premier Hygiene Solutions
           </div>
 
@@ -135,8 +132,8 @@ export default function Hero() {
           <div className={`${styles.actions} ${styles.fadeIn}`} style={{ animationDelay: '0.5s' }}>
             <a href="#services" className="btn-primary">
               Explore Services
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
             <a href="#products" className="btn-outline">
@@ -144,25 +141,24 @@ export default function Hero() {
             </a>
           </div>
 
-          {/* Trust Badges */}
           <div className={`${styles.badges} ${styles.fadeIn}`} style={{ animationDelay: '0.65s' }}>
             {trustBadges.map((badge) => (
-              <span key={badge} className={styles.badge}>{badge}</span>
+              <span key={badge} className={styles.badge}>
+                <ShieldCheck size={13} strokeWidth={2} aria-hidden="true" />
+                {badge}
+              </span>
             ))}
           </div>
         </div>
 
-        {/* Right — Product Image */}
         <div
           className={styles.imageWrap}
           style={{
-            transform: `perspective(1000px) rotateY(${mousePos.x * -3}deg) rotateX(${mousePos.y * 2}deg)`
+            transform: `perspective(1000px) rotateY(${mousePos.x * -3}deg) rotateX(${mousePos.y * 2}deg)`,
           }}
         >
-          {/* Glow behind image */}
           <div className={styles.imageGlow} />
 
-          {/* Main image */}
           <div className={styles.imageBg}>
             <Image
               src="/drain_machine_hero.png"
@@ -174,33 +170,35 @@ export default function Hero() {
             />
           </div>
 
-          {/* Floating stat cards */}
-          {floatingCards.map((card, i) => (
-            <div
-              key={card.label}
-              className={styles.floatCard}
-              style={{
-                '--delay': `${card.delay}s`,
-                top: i === 0 ? '10%' : i === 1 ? '45%' : '72%',
-                left: i === 0 ? '-30px' : i === 1 ? 'auto' : '-20px',
-                right: i === 1 ? '-20px' : 'auto',
-              }}
-            >
-              <span className={styles.floatIcon}>{card.icon}</span>
-              <div>
-                <div className={styles.floatValue}>{card.value}</div>
-                <div className={styles.floatLabel}>{card.label}</div>
+          {floatingCards.map((card, i) => {
+            const Icon = card.icon;
+            return (
+              <div
+                key={card.label}
+                className={styles.floatCard}
+                style={{
+                  '--delay': `${card.delay}s`,
+                  top: i === 0 ? '10%' : i === 1 ? '45%' : '72%',
+                  left: i === 0 ? '-30px' : i === 1 ? 'auto' : '-20px',
+                  right: i === 1 ? '-20px' : 'auto',
+                }}
+              >
+                <span className={styles.floatIcon}>
+                  <Icon size={18} strokeWidth={2.1} aria-hidden="true" />
+                </span>
+                <div>
+                  <div className={styles.floatValue}>{card.value}</div>
+                  <div className={styles.floatLabel}>{card.label}</div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
-          {/* Corner accent lines */}
           <div className={styles.cornerTL} />
           <div className={styles.cornerBR} />
         </div>
       </div>
 
-      {/* Scroll Indicator */}
       <div className={styles.scrollIndicator}>
         <div className={styles.scrollLine} />
         <span>Scroll</span>

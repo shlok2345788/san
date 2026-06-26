@@ -38,7 +38,7 @@ function useInView(threshold = 0.1) {
   return [ref, visible];
 }
 
-function ProductCard({ product, index }) {
+function ProductCard({ product, index, onZoom }) {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
@@ -84,7 +84,7 @@ function ProductCard({ product, index }) {
           />
         </div>
         <div className={styles.cardOverlay}>
-          <button className={styles.zoomBtn} aria-label="View product">
+          <button className={styles.zoomBtn} aria-label="View product" onClick={() => onZoom(product)}>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <circle cx="9" cy="9" r="6" stroke="white" strokeWidth="1.5"/>
               <path d="M14 14l3 3" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
@@ -110,8 +110,18 @@ function ProductCard({ product, index }) {
 
 export default function Products() {
   const [activeCategory, setActiveCategory] = useState('ALL');
+  const [zoomedProduct, setZoomedProduct] = useState(null);
   const [headerRef, headerVisible] = useInView(0.2);
   const [gridRef, gridVisible] = useInView(0.05);
+
+  // Close modal on Escape keypress
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setZoomedProduct(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const filtered = activeCategory === 'ALL'
     ? products
@@ -130,7 +140,7 @@ export default function Products() {
             Comprehensive Hygiene <span>Solutions for Every Need</span>
           </h2>
           <p className="section-subtitle" style={{ margin: '0 auto' }}>
-            <strong style={{ color: '#f0f4ff' }}>Elite Hygiene</strong> provides a complete range of high-quality hygiene products — from drain cleaning systems and inspection tools to cleaning chemicals, dispensers, tissue papers, and housekeeping materials.
+            <strong style={{ color: 'var(--white)' }}>Elite Hygiene</strong> provides a complete range of high-quality hygiene products — from drain cleaning systems and inspection tools to cleaning chemicals, dispensers, tissue papers, and housekeeping materials.
           </p>
         </div>
 
@@ -153,7 +163,7 @@ export default function Products() {
           className={`${styles.grid} ${gridVisible ? styles.gridVisible : ''}`}
         >
           {filtered.map((product, i) => (
-            <ProductCard key={product.id} product={product} index={i} />
+            <ProductCard key={product.id} product={product} index={i} onZoom={setZoomedProduct} />
           ))}
         </div>
 
@@ -171,6 +181,30 @@ export default function Products() {
       {/* BG decoration */}
       <div className={styles.bgBlob1} />
       <div className={styles.bgBlob2} />
+
+      {/* Zoom Modal Popup */}
+      {zoomedProduct && (
+        <div className={styles.modal} onClick={() => setZoomedProduct(null)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.modalClose} onClick={() => setZoomedProduct(null)} aria-label="Close modal">
+              &times;
+            </button>
+            <div className={styles.modalImageWrap}>
+              <Image
+                src={zoomedProduct.image}
+                alt={zoomedProduct.name}
+                width={600}
+                height={450}
+                className={styles.modalImage}
+              />
+            </div>
+            <div className={styles.modalInfo}>
+              <h4 className={styles.modalName}>{zoomedProduct.name}</h4>
+              <span className={styles.modalCategory}>{zoomedProduct.category}</span>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

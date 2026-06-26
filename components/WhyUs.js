@@ -90,8 +90,8 @@ function useInView(threshold = 0.2) {
 }
 
 export default function WhyUs() {
-  const [statsRef, statsVisible] = useInView(0.3);
-  const [headerRef, headerVisible] = useInView(0.2);
+  const [statsRef, statsVisible] = useInView(0.1);
+  const [headerRef, headerVisible] = useInView(0.1);
 
   return (
     <section className={`${styles.whyUs} section`} id="whyus">

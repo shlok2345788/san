@@ -6,36 +6,38 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* Core Palette */
-  --navy-950: #020817;
-  --navy-900: #0a1628;
-  --navy-800: #0d1f3c;
-  --navy-700: #112244;
-  --navy-600: #1a3056;
+  /* Core Palette (Light Theme) */
+  --navy-950: #f8fafc; /* Main light background (slate-50) */
+  --navy-900: #ffffff; /* Clean white for cards and layout sections */
+  --navy-800: #f1f5f9; /* Slate-100 for section backgrounds and tables */
+  --navy-700: #e2e8f0; /* Slate-200 for thin borders and dividers */
+  --navy-600: #cbd5e1; /* Slate-300 for active state inputs and borders */
 
   /* Accent Colors */
-  --gold: #c9a84c;
-  --gold-light: #e8c96a;
-  --gold-dim: rgba(201, 168, 76, 0.15);
-  --gold-glow: rgba(201, 168, 76, 0.3);
+  --gold: #b08d32; /* Richer gold for high legibility on light background */
+  --gold-light: #c9a84c; /* Standard brand gold */
+  --gold-dim: rgba(176, 141, 50, 0.08); /* Soft gold tint for labels */
+  --gold-glow: rgba(176, 141, 50, 0.15);
 
-  /* Silver / White */
-  --silver: #8899aa;
-  --silver-light: #c0ccd8;
-  --white: #f0f4ff;
-  --white-dim: rgba(240, 244, 255, 0.85);
+  /* Silver / White (Contrast Mappings) */
+  --silver: #64748b; /* slate-500 for muted text */
+  --silver-light: #475569; /* slate-600 for intermediate text */
+  --white: #0f172a; /* Body text color (slate-900) */
+  --white-dim: #334155; /* Secondary text (slate-700) */
+  --primary-btn-text: #020817; /* High-contrast text color on gold buttons */
+  --mobile-menu-bg: rgba(255, 255, 255, 0.98); /* Light mode mobile menu backdrop */
 
-  /* Glass */
-  --glass-white: rgba(255, 255, 255, 0.04);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-gold: rgba(201, 168, 76, 0.2);
-  --glass-hover: rgba(255, 255, 255, 0.07);
+  /* Glass Effects */
+  --glass-white: rgba(255, 255, 255, 0.7); /* Frosted white glass background */
+  --glass-border: rgba(15, 23, 42, 0.08); /* Subtle slate border */
+  --glass-border-gold: rgba(176, 141, 50, 0.3); /* Accent glass border */
+  --glass-hover: rgba(255, 255, 255, 0.9);
 
-  /* Glow Effects */
-  --glow-gold: 0 0 40px rgba(201, 168, 76, 0.2), 0 0 80px rgba(201, 168, 76, 0.08);
-  --glow-blue: 0 0 40px rgba(59, 130, 246, 0.15);
-  --shadow-deep: 0 25px 80px rgba(0,0,0,0.6), 0 10px 30px rgba(0,0,0,0.4);
-  --shadow-card: 0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
+  /* Glow & Shadows */
+  --glow-gold: 0 10px 30px rgba(176, 141, 50, 0.12), 0 4px 12px rgba(176, 141, 50, 0.06);
+  --glow-blue: 0 10px 30px rgba(59, 130, 246, 0.06);
+  --shadow-deep: 0 20px 40px rgba(15, 23, 42, 0.06), 0 10px 20px rgba(15, 23, 42, 0.04);
+  --shadow-card: 0 10px 30px rgba(15, 23, 42, 0.04), 0 2px 8px rgba(15, 23, 42, 0.02);
 
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;

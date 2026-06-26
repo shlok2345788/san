@@ -168,18 +168,20 @@
   display: none;
   flex-direction: column;
   gap: 4px;
-  padding: 0 20px 24px;
+  padding: 0 20px;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1), padding 0.5s cubic-bezier(0.23, 1, 0.32, 1);
   background: var(--mobile-menu-bg);
-  border-bottom: 1px solid var(--glass-border);
+  border-bottom: 0 solid transparent;
   backdrop-filter: blur(24px);
 }
 
 .mobileMenu.mobileOpen {
   max-height: 400px;
   padding-top: 16px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--glass-border);
 }
 
 .mobileLink {
